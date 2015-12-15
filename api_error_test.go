@@ -10,20 +10,20 @@ import (
 	"net/http/httptest"
 )
 
+func getExpectedJsonError(message string) []byte {
+	expectedJson := map[string]interface{}{
+		"error": map[string]interface{}{
+			"message": message,
+		},
+	}
+
+	expectedBytes, _ := json.Marshal(expectedJson)
+	return expectedBytes
+}
+
 var _ = Describe("ApiError", func() {
 	kErrorCode := http.StatusNotFound
 	kErrorMessage := "error message"
-
-	getExpectedJsonError := func(message string) []byte {
-		expectedJson := map[string]interface{}{
-			"error": map[string]interface{}{
-				"message": message,
-			},
-		}
-
-		expectedBytes, _ := json.Marshal(expectedJson)
-		return expectedBytes
-	}
 
 	var apiError *ApiError
 
